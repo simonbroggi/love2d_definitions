@@ -268,10 +268,11 @@ function love.physics.newPulleyJoint(body1, body2, gx1, gy1, gx2, gy2, x1, y1, x
 ---[Open in Browser](https://love2d.org/wiki/love.physics.newRectangleShape)
 ---
 ---@overload fun(x: number, y: number, width: number, height: number, angle?: number):love.PolygonShape
+---@param body love.Body # The body this shape is attached to.
 ---@param width number # The width of the rectangle.
 ---@param height number # The height of the rectangle.
 ---@return love.PolygonShape shape # A new PolygonShape.
-function love.physics.newRectangleShape(width, height) end
+function love.physics.newRectangleShape(body, width, height) end
 
 ---
 ---Creates a pivot joint between two bodies.
