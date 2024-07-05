@@ -76,6 +76,17 @@ function love.keyboard.hasTextInput() end
 function love.keyboard.isDown(key) end
 
 ---
+---Checks whether a modifier key is active.
+---Example of modifier keys are caps lock, num lock, and scroll lock while also have press/release state, additionally also have active state.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.keyboard.isModifierActive)
+---
+---@param modifier love.ModifierKey # Modifier key to check.
+---@return boolean active # Wheter the specified modifier key is active or not.
+function love.keyboard.isModifierActive(modifier) end
+
+---
 ---Checks whether the specified Scancodes are pressed. Not to be confused with love.keypressed or love.keyreleased.
 ---
 ---Unlike regular KeyConstants, Scancodes are keyboard layout-independent. The scancode 'w' is used if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
@@ -692,6 +703,30 @@ function love.keyboard.setTextInput(enable) end
 ---Application bookmarks key
 ---
 ---| "appbookmarks"
+
+---
+---Modifier keys are keys that have "active" state in addition of pressed/released state, thus modifier keys are small subset of KeyConstant.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ModifierKey)
+---
+---@alias love.ModifierKey
+---
+---Caps-lock key
+---
+---| "capslock"
+---
+---Num-lock key
+---
+---| "numlock"
+---
+---Scroll-lock key
+---
+---| "scrollock"
+---
+---Mode key
+---
+---| "mode"
 
 ---
 ---Keyboard scancodes.

@@ -81,11 +81,12 @@ function love.data.getPackedSize(format) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.data.hash)
 ---
----@overload fun(hashFunction: love.HashFunction, data: love.Data):string
+---@overload fun(containerType: love.ContainerType, hashFunction: love.HashFunction, data: love.Data):love.Data|string
+---@param containerType love.ContainerType # What type to return the message digest data as.
 ---@param hashFunction love.HashFunction # Hash algorithm to use.
 ---@param string string # String to hash.
----@return string rawdigest # Raw message digest string.
-function love.data.hash(hashFunction, string) end
+---@return love.Data|string rawdigest # Raw message digest data.
+function love.data.hash(containerType, hashFunction, string) end
 
 ---
 ---Creates a new Data object containing arbitrary bytes.
@@ -147,13 +148,109 @@ function love.data.unpack(format, datastring, pos) end
 ---
 ---Data object containing arbitrary bytes in an contiguous memory.
 ---
----There are currently no LÖVE functions provided for manipulating the contents of a ByteData, but Data:getPointer can be used with LuaJIT's FFI to access and write to the contents directly.
----
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.data)
 ---
 ---@class love.ByteData: love.Object, love.Data
 local ByteData = {}
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setDouble)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setDouble(offset, ...) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setFloat)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setFloat(offset, ...) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setInt8)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setInt8(offset, ...) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setInt16)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setInt16(offset, ...) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setInt32)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setInt32(offset, ...) end
+
+---
+---Replaces all or part of the ByteData's memory with the contents of a string.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setString)
+---
+---@param data string # The bytes to copy to the Data object.
+---@param offset? number # An optional byte offset into the Data's memory to copy to.
+function ByteData:setString(data, offset) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setUInt8)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setUInt8(offset, ...) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setUInt16)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setUInt16(offset, ...) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/ByteData:setUInt32)
+---
+---@overload fun(self: love.ByteData, offset: number, values: table)
+---@param offset number # 
+---@vararg number # 
+function ByteData:setUInt32(offset, ...) end
 
 ---
 ---Represents byte data compressed using a specific algorithm.

@@ -188,6 +188,15 @@ function Joystick:getGamepadMapping(axis) end
 function Joystick:getGamepadMappingString() end
 
 ---
+---Gets the GamepadType of the Joystick, if it's recognized as a gamepad.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:getGamepadType)
+---
+---@return love.GamepadType gamepadtype # The type of the gamepad, or "unknown" if it can't be determined.
+function Joystick:getGamepadType() end
+
+---
 ---Gets the direction of the Joystick's hat.
 ---
 ---
@@ -217,6 +226,16 @@ function Joystick:getHatCount() end
 function Joystick:getID() end
 
 ---
+---Gets the JoystickType of the Joystick.
+---JoystickTypes are broader categories than GamepadTypes.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:getJoystickType)
+---
+---@return love.JoystickType joysticktype # The type of the joystick, or "unknown" if it can't be determined.
+function Joystick:getJoystickType() end
+
+---
 ---Gets the name of the joystick.
 ---
 ---
@@ -224,6 +243,18 @@ function Joystick:getID() end
 ---
 ---@return string name # The name of the joystick.
 function Joystick:getName() end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:getSensorData)
+---
+---@param sensorType love.SensorType # 
+---@return number x # 
+---@return number y # 
+---@return number z # 
+function Joystick:getSensorData(sensorType) end
 
 ---
 ---Gets the current vibration motor strengths on a Joystick with rumble support.
@@ -234,6 +265,16 @@ function Joystick:getName() end
 ---@return number left # Current strength of the left vibration motor on the Joystick.
 ---@return number right # Current strength of the right vibration motor on the Joystick.
 function Joystick:getVibration() end
+
+---
+---Gets whether the specified sensor exists in the Joystick.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:hasSensor)
+---
+---@param sensorType love.SensorType # Type of sensor to check.
+---@return boolean available # Sensor availability status.
+function Joystick:hasSensor(sensorType) end
 
 ---
 ---Gets whether the Joystick is connected.
@@ -278,6 +319,16 @@ function Joystick:isGamepad() end
 function Joystick:isGamepadDown(buttonN) end
 
 ---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:isSensorEnabled)
+---
+---@param sensorType love.SensorType # 
+---@return boolean enabled # 
+function Joystick:isSensorEnabled(sensorType) end
+
+---
 ---Gets whether the Joystick supports vibration.
 ---
 ---
@@ -285,6 +336,15 @@ function Joystick:isGamepadDown(buttonN) end
 ---
 ---@return boolean supported # True if rumble / force feedback vibration is supported on this Joystick, false if not.
 function Joystick:isVibrationSupported() end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:setSensorEnabled)
+---
+---@param sensorType love.SensorType # 
+function Joystick:setSensorEnabled(sensorType) end
 
 ---
 ---Sets the vibration motor speeds on a Joystick with rumble support. Most common gamepads have this functionality, although not all drivers give proper support. Use Joystick:isVibrationSupported to check.
@@ -398,6 +458,94 @@ function Joystick:setVibration(left, right) end
 ---D-pad right.
 ---
 ---| "dpright"
+---
+---Xbox Series X controller share button, PS5 controller mic button, and Switch Pro controller capture button.
+---
+---| "misc1"
+---
+---First paddle button.
+---
+---| "paddle1"
+---
+---Second paddle button.
+---
+---| "paddle2"
+---
+---Third paddle button.
+---
+---| "paddle3"
+---
+---Fourth paddle button.
+---
+---| "paddle4"
+---
+---Controller touchpad press.
+---
+---| "touchpad"
+
+---
+---Types of gamepad controllers.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/GamepadType)
+---
+---@alias love.GamepadType
+---
+---An unrecognized gamepad type.
+---
+---| "unknown"
+---
+---Xbox 360 controller.
+---
+---| "xbox360"
+---
+---Xbox One controller.
+---
+---| "xboxone"
+---
+---PS3 (Dualshock 3) controller.
+---
+---| "ps3"
+---
+---PS4 (Dualshock 4) controller.
+---
+---| "ps4"
+---
+---PS5 (Dualsense) controller.
+---
+---| "ps5"
+---
+---Switch Pro controller.
+---
+---| "switchpro"
+---
+---Amazon Luna controller.
+---
+---| "amazonluna"
+---
+---Stadia controller.
+---
+---| "stadia"
+---
+---Software-based gamepad whose state is set programmatically.
+---
+---| "virtual"
+---
+---nvidia Shield controller.
+---
+---| "shield"
+---
+---Left-hand joycon.
+---
+---| "joyconleft"
+---
+---Right-hand joycon.
+---
+---| "joyconright"
+---
+---Both left- and right-hand joycons together.
+---
+---| "joyconpair"
 
 ---
 ---Joystick hat positions.
@@ -462,3 +610,51 @@ function Joystick:setVibration(left, right) end
 ---8-direction hat value.
 ---
 ---| "hat"
+
+---
+---Types of Joysticks.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/JoystickType)
+---
+---@alias love.JoystickType
+---
+---An unrecognized joystick type.
+---
+---| "unknown"
+---
+---A gamepad.
+---
+---| "gamepad"
+---
+---Steering / racing wheel.
+---
+---| "wheel"
+---
+---Fighting game arcade stick.
+---
+---| "arcadestick"
+---
+---HOTAS / flight stick.
+---
+---| "flightstick"
+---
+---Dance pad.
+---
+---| "dancepad"
+---
+---Guitar.
+---
+---| "guitar"
+---
+---Drum kit.
+---
+---| "drumkit"
+---
+---Arcade pad.
+---
+---| "arcadepad"
+---
+---Standard throttle.
+---
+---| "throttle"

@@ -163,12 +163,30 @@ function love.math.newTransform() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.math.noise)
 ---
+---@deprecated replaced by love.math.perlinNoise and love.math.simplexNoise
 ---@overload fun(x: number, y: number):number
 ---@overload fun(x: number, y: number, z: number):number
 ---@overload fun(x: number, y: number, z: number, w: number):number
 ---@param x number # The number used to generate the noise value.
 ---@return number value # The noise value in the range of 1.
 function love.math.noise(x) end
+
+---
+---Generates a Perlin noise value in 1-4 dimensions. The return value will always be the same, given the same arguments.
+---
+---It is widely used for procedural content generation.
+---
+---There are many webpages which discuss Perlin and Simplex noise in detail.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.math.perlinNoise)
+---
+---@overload fun(x: number, y: number):number
+---@overload fun(x: number, y: number, z: number):number
+---@overload fun(x: number, y: number, z: number, w: number):number
+---@param x number # The number used to generate the noise value.
+---@return number value # The noise value in the range of 1.
+function love.math.perlinNoise(x) end
 
 ---
 ---Generates a pseudo-random number in a platform independent manner. The default love.run seeds this function at startup, so you generally don't need to seed it yourself.
@@ -191,6 +209,23 @@ function love.math.random() end
 ---@param mean? number # The mean of the distribution.
 ---@return number number # Normally distributed random number with variance (stddev)² and the specified mean.
 function love.math.randomNormal(stddev, mean) end
+
+---
+---Generates a Simplex noise value in 1-4 dimensions. The return value will always be the same, given the same arguments.
+---
+---It is widely used for procedural content generation.
+---
+---There are many webpages which discuss Perlin and Simplex noise in detail.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.math.simplexNoise)
+---
+---@overload fun(x: number, y: number):number
+---@overload fun(x: number, y: number, z: number):number
+---@overload fun(x: number, y: number, z: number, w: number):number
+---@param x number # The number used to generate the noise value.
+---@return number value # The noise value in the range of 1.
+function love.math.simplexNoise(x) end
 
 ---
 ---Sets the seed of the random number generator using the specified integer number. This is called internally at startup, so you generally don't need to call it yourself.
@@ -613,25 +648,7 @@ function Transform:scale(sx, sy) end
 ---@param e4_3 number # The third column of the fourth row of the matrix.
 ---@param e4_4 number # The fourth column of the fourth row of the matrix.
 ---@return love.Transform transform # The Transform object the method was called on. Allows easily chaining Transform methods.
-function Transform:setMatrix(
-	e1_1,
-	e1_2,
-	e1_3,
-	e1_4,
-	e2_1,
-	e2_2,
-	e2_3,
-	e2_4,
-	e3_1,
-	e3_2,
-	e3_3,
-	e3_4,
-	e4_1,
-	e4_2,
-	e4_3,
-	e4_4
-)
-end
+function Transform:setMatrix(e1_1, e1_2, e1_3, e1_4, e2_1, e2_2, e2_3, e2_4, e3_1, e3_2, e3_3, e3_4, e4_1, e4_2, e4_3, e4_4) end
 
 ---
 ---Resets the Transform to the specified transformation parameters.

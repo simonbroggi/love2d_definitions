@@ -88,6 +88,25 @@ function love.audio.getMaxSourceEffects() end
 function love.audio.getOrientation() end
 
 ---
+---Gets the currently active playback device.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.audio.getPlaybackDevice)
+---
+---@return string device # The name of the current playback device.
+function love.audio.getPlaybackDevice() end
+
+---
+---Gets a list of playback devices on the system.
+---The first device in the list is the user's default playback device.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.audio.getPlaybackDevices)
+---
+---@return table devices # The list of connected playback device names as strings.
+function love.audio.getPlaybackDevices() end
+
+---
 ---Returns the position of the listener. Please note that positional audio only works for mono (i.e. non-stereo) sources.
 ---
 ---
@@ -110,6 +129,15 @@ function love.audio.getPosition() end
 ---
 ---@return table devices # The list of connected recording devices.
 function love.audio.getRecordingDevices() end
+
+---
+---Gets the current number of simultaneously playing sources.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.audio.getSourceCount)
+---
+---@return number numSources # The current number of simultaneously playing sources.
+function love.audio.getSourceCount() end
 
 ---
 ---Returns the velocity of the listener.
@@ -161,14 +189,15 @@ function love.audio.newQueueableSource(samplerate, bitdepth, channels, buffercou
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.audio.newSource)
 ---
----@overload fun(file: love.File, type: love.SourceType):love.Source
----@overload fun(decoder: love.Decoder, type: love.SourceType):love.Source
+---@overload fun(file: love.File, type: love.SourceType, mode?: love.StreamType):love.Source
+---@overload fun(decoder: love.Decoder, type: love.SourceType, mode?: love.StreamType):love.Source
 ---@overload fun(data: love.FileData, type: love.SourceType):love.Source
 ---@overload fun(data: love.SoundData):love.Source
 ---@param filename string # The filepath to the audio file.
 ---@param type love.SourceType # Streaming or static source.
+---@param mode? love.StreamType # 
 ---@return love.Source source # A new Source that can play the specified audio.
-function love.audio.newSource(filename, type) end
+function love.audio.newSource(filename, type, mode) end
 
 ---
 ---Pauses specific or all currently played Sources.
@@ -247,6 +276,17 @@ function love.audio.setMixWithSystem(mix) end
 ---@param uy number # Up vector of the listener orientation.
 ---@param uz number # Up vector of the listener orientation.
 function love.audio.setOrientation(fx, fy, fz, ux, uy, uz) end
+
+---
+---Change the audio device to specified device. Also used to reconnect audio device in case of device disconnection.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.audio.setPlaybackDevice)
+---
+---@param name? string # Fully qualified device name, or nil to use system default.
+---@return boolean success # Is the function succeeded?
+---@return string message # Error message on failure (nil on succesful).
+function love.audio.setPlaybackDevice(name) end
 
 ---
 ---Sets the position of the listener, which determines how sounds play.
@@ -750,7 +790,7 @@ function Source:setPosition(x, y, z) end
 ---
 ---Sets whether the Source's position, velocity, direction, and cone angles are relative to the listener, or absolute.
 ---
----By default, all sources are absolute and therefore relative to the origin of love's coordinate system 0, 0. Only absolute sources are affected by the position of the listener. Please note that positional audio only works for mono (i.e. non-stereo) sources.
+---By default, all sources are absolute and therefore relative to the origin of love's coordinate system 0, 0. Only absolute sources are affected by the position of the listener. Please note that positional audio only works for mono (i.e. non-stereo) sources. 
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/Source:setRelative)
@@ -962,6 +1002,22 @@ function Source:tell(unit) end
 ---The audio must be manually queued by the user.
 ---
 ---| "queue"
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/StreamType)
+---
+---@alias love.StreamType
+---
+---
+---
+---| "file"
+---
+---
+---
+---| "memory"
 
 ---
 ---Units that represent time.

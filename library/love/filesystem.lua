@@ -45,6 +45,16 @@ function love.filesystem.areSymlinksEnabled() end
 function love.filesystem.createDirectory(name) end
 
 ---
+---Check whether a file or directory exists.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.exists)
+---
+---@param filename string # The path to a potential file or directory.
+---@return boolean exists # True if there is a file or directory with the specified name. False otherwise.
+function love.filesystem.exists(filename) end
+
+---
 ---Returns the application data directory (could be the same as getUserDirectory)
 ---
 ---
@@ -80,7 +90,17 @@ function love.filesystem.getCRequirePath() end
 function love.filesystem.getDirectoryItems(dir) end
 
 ---
----Gets the write directory name for your game.
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.getFullCommonPath)
+---
+---@param commonPath love.CommonPath # 
+---@return string path # 
+function love.filesystem.getFullCommonPath(commonPath) end
+
+---
+---Gets the write directory name for your game. 
 ---
 ---Note that this only returns the name of the folder to store your files in, not the full path.
 ---
@@ -100,7 +120,7 @@ function love.filesystem.getIdentity() end
 ---@overload fun(path: string, filtertype: love.FileType, info: table):table
 ---@param path string # The file or directory path to check.
 ---@param filtertype? love.FileType # If supplied, this parameter causes getInfo to only return the info table if the item at the given path matches the specified file type.
----@return {type: love.FileType, size: number, modtime: number} info # A table containing information about the specified path, or nil if nothing exists at the path. The table contains the following fields:
+---@return {type: love.FileType, size: number, modtime: number, readonly: boolean} info # A table containing information about the specified path, or nil if nothing exists at the path. The table contains the following fields:
 function love.filesystem.getInfo(path, filtertype) end
 
 ---
@@ -218,9 +238,10 @@ function love.filesystem.lines(name) end
 ---[Open in Browser](https://love2d.org/wiki/love.filesystem.load)
 ---
 ---@param name string # The name (and path) of the file.
+---@param mode? love.LoadMode # Controls to only allow precompiled chunk, plain text, or both.
 ---@return function chunk # The loaded chunk.
 ---@return string errormsg # The error message if file could not be opened.
-function love.filesystem.load(name) end
+function love.filesystem.load(name, mode) end
 
 ---
 ---Mounts a zip file or folder in the game's save directory for reading.
@@ -239,17 +260,30 @@ function love.filesystem.load(name) end
 function love.filesystem.mount(archive, mountpoint, appendToPath) end
 
 ---
----Creates a new File object.
----
----It needs to be opened before it can be accessed.
 ---
 ---
----[Open in Browser](https://love2d.org/wiki/love.filesystem.newFile)
 ---
----@overload fun(filename: string, mode: love.FileMode):love.File, string
----@param filename string # The filename of the file.
----@return love.File file # The new File object.
-function love.filesystem.newFile(filename) end
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.mountCommonPath)
+---
+---@param commonPath love.CommonPath # 
+---@param mountpoint string # 
+---@param permission? love.MountPermissions # The requested permissions for operating on files and folders in this path after mounting ("read", or "readwrite").
+---@param appendToPath? boolean # Whether the archive will be searched when reading a filepath before or after already-mounted archives. This includes the game's source and save directories.
+---@return boolean success # 
+function love.filesystem.mountCommonPath(commonPath, mountpoint, permission, appendToPath) end
+
+---
+---Mounts a full platform-dependent path to a zip file or folder for reading or writing in love.filesystem.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.mountFullPath)
+---
+---@param archive string # The full platform-dependent path to a folder or zip file to mount.
+---@param mountpoint string # The new path in love.filesystem the archive or the platform-dependent path will be mounted to.
+---@param permission? love.MountPermissions # The requested permissions for operating on files and folders in this path after mounting ("read", or "readwrite").
+---@param appendToPath? boolean # Whether the archive will be searched when reading a filepath before or after already-mounted archives. This includes the game's source and save directories.
+---@return boolean success # True if the archive was successfully mounted with the given path and permissions, false otherwise.
+function love.filesystem.mountFullPath(archive, mountpoint, permission, appendToPath) end
 
 ---
 ---Creates a new FileData object from a file on disk, or from a string in memory.
@@ -263,6 +297,18 @@ function love.filesystem.newFile(filename) end
 ---@param name string # The name of the file. The extension may be parsed and used by LÖVE when passing the FileData object into love.audio.newSource.
 ---@return love.FileData data # The new FileData.
 function love.filesystem.newFileData(contents, name) end
+
+---
+---Opens a new File object, which represents an existing or new file on disk.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.openFile)
+---
+---@param filename string # The filename of the file.
+---@param mode love.FileMode # The mode to open the file in.
+---@return love.File file # The new File object, or nil if an error occurred.
+---@return string errorstr # The error string if an error occurred.
+function love.filesystem.openFile(filename, mode) end
 
 ---
 ---Read the contents of a file.
@@ -303,7 +349,7 @@ function love.filesystem.remove(name) end
 function love.filesystem.setCRequirePath(paths) end
 
 ---
----Sets the write directory for your game.
+---Sets the write directory for your game. 
 ---
 ---Note that you can only set the name of the folder to store your files in, not the location.
 ---
@@ -354,6 +400,26 @@ function love.filesystem.setSymlinksEnabled(enable) end
 ---@param archive string # The folder or zip file in the game's save directory which is currently mounted.
 ---@return boolean success # True if the archive was successfully unmounted, false otherwise.
 function love.filesystem.unmount(archive) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.unmountCommonPath)
+---
+---@param commonPath love.CommonPath # 
+---@return boolean success # 
+function love.filesystem.unmountCommonPath(commonPath) end
+
+---
+---Unmounts a zip file or folder previously mounted with love.filesystem.mountFullPath.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.filesystem.unmountFullPath)
+---
+---@param archive string # The full platform-dependent path to a folder or zip file which is currently mounted via love.filesystem.mountFullPath.
+---@return boolean success # True if the archive was successfully unmounted, false otherwise.
+function love.filesystem.unmountFullPath(archive) end
 
 ---
 ---Write data to a file in the save directory. If the file existed already, it will be completely replaced by the new contents.
@@ -589,6 +655,38 @@ function FileData:getFilename() end
 ---| "full"
 
 ---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/CommonPath)
+---
+---@alias love.CommonPath
+---
+---
+---
+---| "appsavedir"
+---
+---
+---
+---| "appdocuments"
+---
+---
+---
+---| "userhome"
+---
+---
+---
+---| "userappdata"
+---
+---
+---
+---| "userdesktop"
+---
+---
+---
+---| "userdocuments"
+
+---
 ---How to decode a given FileData.
 ---
 ---
@@ -651,3 +749,39 @@ function FileData:getFilename() end
 ---Something completely different like a device.
 ---
 ---| "other"
+
+---
+---Possible load modes for love.filesystem.load. This is equivalent to 3rd parameter (mode) in Lua 5.3 load.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/LoadMode)
+---
+---@alias love.LoadMode
+---
+---Only load the file if it's binary pre-compiled chunk.
+---
+---| "b"
+---
+---Only load the file if it's plain text file.
+---
+---| "t"
+---
+---Always loads no matter if it's plain text or pre-compiled chunk.
+---
+---| "bt"
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/MountPermissions)
+---
+---@alias love.MountPermissions
+---
+---
+---
+---| "read"
+---
+---
+---
+---| "readwrite"

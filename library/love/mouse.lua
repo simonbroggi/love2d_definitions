@@ -19,6 +19,16 @@ love.mouse = {}
 function love.mouse.getCursor() end
 
 ---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.mouse.getGlobalPosition)
+---
+---@return number x # 
+---@return number y # 
+function love.mouse.getGlobalPosition() end
+
+---
 ---Returns the current position of the mouse.
 ---
 ---
@@ -49,7 +59,7 @@ function love.mouse.getRelativeMode() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.mouse.getSystemCursor)
 ---
----@param ctype love.CursorType # The type of system cursor to get.
+---@param ctype love.CursorType # The type of system cursor to get. 
 ---@return love.Cursor cursor # The Cursor object representing the system cursor type.
 function love.mouse.getSystemCursor(ctype) end
 
@@ -85,7 +95,7 @@ function love.mouse.isCursorSupported() end
 ---
 ---Checks whether a certain mouse button is down.
 ---
----This function does not detect mouse wheel scrolling; you must use the love.wheelmoved (or love.mousepressed in version 0.9.2 and older) callback for that.
+---This function does not detect mouse wheel scrolling; you must use the love.wheelmoved (or love.mousepressed in version 0.9.2 and older) callback for that. 
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.mouse.isDown)
