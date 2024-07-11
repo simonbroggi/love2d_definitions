@@ -784,7 +784,7 @@ function love.graphics.newFont(filename) end
 ---@overload fun(imageData: love.ImageData, settings: table):love.Texture
 ---@overload fun(compressedImageData: love.CompressedImageData, settings: table):love.Texture
 ---@param filename string # The filepath to the image file.
----@param settings {dpiscale: number, linear: boolean, mipmaps: boolean} # A table containing the following fields:
+---@param settings? {dpiscale: number, linear: boolean, mipmaps: boolean} # A table containing the following fields:
 ---@return love.Texture image # A new Texture object which can be drawn on screen.
 function love.graphics.newImage(filename, settings) end
 
