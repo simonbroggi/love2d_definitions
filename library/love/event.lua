@@ -59,6 +59,17 @@ function love.event.pump() end
 function love.event.push(n, a, b, c, d, e, f, ...) end
 
 ---
+---Restarts the game without relaunching the executable, by adding a quit event with a "restart" parameter to the queue. This cleanly shuts down the main Lua state instance and creates a brand new one.
+---
+---Equivalent to `love.event.push("quit", "restart", restartarg)`.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.event.restart)
+---
+---@param restartarg? number # A value which will appear in the love.restart table field after restarting. Can be a table containing multiple Lua values.
+function love.event.restart(restartarg) end
+
+---
 ---Adds the quit event to the queue.
 ---
 ---The quit event is a signal for the event handler to close LÖVE. It's possible to abort the exit process with the love.quit callback.

@@ -89,6 +89,19 @@ function love.graphics.circle(mode, x, y, radius) end
 function love.graphics.clear() end
 
 ---
+---Copies the contents of one GraphicsBuffer to another.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.graphics.copyBuffer)
+---
+---@param source love.GraphicsBuffer # The GraphicsBuffer to copy data from.
+---@param dest love.GraphicsBuffer # The GraphicsBuffer to copy data into.
+---@param sourceoffset? number # The GraphicsBuffer to copy data into.
+---@param destoffset? number # The GraphicsBuffer to copy data into.
+---@param size? number # The GraphicsBuffer to copy data into.
+function love.graphics.copyBuffer(source, dest, sourceoffset, destoffset, size) end
+
+---
 ---Discards (trashes) the contents of the screen or active Canvas. This is a performance optimization function with niche use cases.
 ---
 ---If the active Canvas has just been changed and the 'replace' BlendMode is about to be used to draw something which covers the entire screen, calling love.graphics.discard rather than calling love.graphics.clear or doing nothing may improve performance on mobile devices.
@@ -102,6 +115,18 @@ function love.graphics.clear() end
 ---@param discardcolor? boolean # Whether to discard the texture(s) of the active Canvas(es) (the contents of the screen if no Canvas is active.)
 ---@param discardstencil? boolean # Whether to discard the contents of the stencil buffer of the screen / active Canvas.
 function love.graphics.discard(discardcolor, discardstencil) end
+
+---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.graphics.dispatchThreadgroups)
+---
+---@param computeshader love.Shader # 
+---@param x number # 
+---@param y? number # 
+---@param z? number # 
+function love.graphics.dispatchThreadgroups(computeshader, x, y, z) end
 
 ---
 ---Draws a Drawable object (an Image, Canvas, SpriteBatch, ParticleSystem, Mesh, Text object, or Video) on the screen with optional rotation, scaling and shearing.
@@ -244,17 +269,6 @@ function love.graphics.getBlendMode() end
 function love.graphics.getCanvas() end
 
 ---
----Gets the available Canvas formats, and whether each is supported.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.getCanvasFormats)
----
----@deprecated replaced by love.graphics.getTextureFormats
----@overload fun(readable: boolean):table
----@return table formats # A table containing CanvasFormats as keys, and a boolean indicating whether the format is supported as values. Not all systems support all formats.
-function love.graphics.getCanvasFormats() end
-
----
 ---Gets the current color.
 ---
 ---In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
@@ -358,16 +372,6 @@ function love.graphics.getFrontFaceWinding() end
 ---
 ---@return number height # The height of the window.
 function love.graphics.getHeight() end
-
----
----Gets the raw and compressed pixel formats usable for Images, and whether each is supported.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.getImageFormats)
----
----@deprecated replaced by love.graphics.getTextureFormats
----@return table formats # A table containing PixelFormats as keys, and a boolean indicating whether the format is supported as values. Not all systems support all formats.
-function love.graphics.getImageFormats() end
 
 ---
 ---Gets the line join style.
@@ -526,21 +530,6 @@ function love.graphics.getStencilMode() end
 function love.graphics.getStencilState() end
 
 ---
----Gets the current stencil test configuration.
----
----When stencil testing is enabled, the geometry of everything that is drawn afterward will be clipped / stencilled out based on a comparison between the arguments of this function and the stencil value of each pixel that the geometry touches. The stencil values of pixels are affected via love.graphics.stencil.
----
----Each Canvas has its own per-pixel stencil values.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.getStencilTest)
----
----@deprecated replaced by love.graphics.getStencilMode or love.graphics.getStencilState
----@return love.CompareMode comparemode # The type of comparison that is made for each pixel. Will be 'always' if stencil testing is disabled.
----@return number comparevalue # The value used when comparing with the stencil value of each pixel.
-function love.graphics.getStencilTest() end
-
----
 ---Gets the optional graphics features and whether they're supported on the system.
 ---
 ---Some older or low-end systems don't always support all graphics features.
@@ -548,7 +537,7 @@ function love.graphics.getStencilTest() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.getSupported)
 ---
----@return table features # A table containing GraphicsFeature keys, and boolean values indicating whether each feature is supported.
+---@return table<love.GraphicsFeature, boolean> features # A table containing GraphicsFeature keys, and boolean values indicating whether each feature is supported.
 function love.graphics.getSupported() end
 
 ---
@@ -557,18 +546,18 @@ function love.graphics.getSupported() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.getSystemLimits)
 ---
----@return table limits # A table containing GraphicsLimit keys, and number values.
+---@return table<love.GraphicsLimit, number> limits # A table containing GraphicsLimit keys, and number values.
 function love.graphics.getSystemLimits() end
 
 ---
----
+---Gets the available pixel formats, and whether each is supported for the given Texture usage configuration.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.getTextureFormats)
 ---
----@param flags {canvas: boolean, computewrite: boolean, readable: boolean} # 
----@return table formats # A table containing PixelFormats as keys, and a boolean indicating whether the format is supported as values. Not all systems support all formats.
-function love.graphics.getTextureFormats(flags) end
+---@param usage {canvas: boolean, readable: boolean, computewrite: boolean} # A table containing fields describing how the pixel formats will be used.
+---@return table<love.PixelFormat, boolean> formats # A table containing PixelFormats as keys, and a boolean indicating whether the format is supported for the given usage configuration as values. Not all systems support all formats.
+function love.graphics.getTextureFormats(usage) end
 
 ---
 ---Gets the available texture types, and whether each is supported.
@@ -576,7 +565,7 @@ function love.graphics.getTextureFormats(flags) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.getTextureTypes)
 ---
----@return table texturetypes # A table containing TextureTypes as keys, and a boolean indicating whether the type is supported as values. Not all systems support all types.
+---@return table<love.TextureType, boolean> texturetypes # A table containing TextureTypes as keys, and a boolean indicating whether the type is supported as values. Not all systems support all types.
 function love.graphics.getTextureTypes() end
 
 ---
@@ -682,6 +671,18 @@ function love.graphics.line(x1, y1, x2, y2, ...) end
 function love.graphics.newArrayImage(slices, settings) end
 
 ---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.graphics.newBuffer)
+---
+---@param format {name: string, format: love.BufferDataFormat}[] # 
+---@param count number # 
+---@param settings {vertex: boolean, index: boolean, texel: boolean, shaderstorage: boolean, indirectarguments: boolean, usage: love.BufferDataUsage} # 
+---@return love.GraphicsBuffer buffer # 
+function love.graphics.newBuffer(format, count, settings) end
+
+---
 ---Creates a new Texture object for offscreen rendering.
 ---
 ---
@@ -699,10 +700,10 @@ function love.graphics.newCanvas() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.newComputeShader)
 ---
+---@overload fun(code: string, defines?: table):love.Shader
 ---@param code string # 
----@param defines table # 
 ---@return love.Shader shader # 
-function love.graphics.newComputeShader(code, defines) end
+function love.graphics.newComputeShader(code) end
 
 ---
 ---Creates a new cubemap Image.
@@ -779,11 +780,11 @@ function love.graphics.newFont(filename) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.newImage)
 ---
----@overload fun(fileData: love.FileData, settings?: table):love.Texture
----@overload fun(imageData: love.ImageData, settings?: table):love.Texture
----@overload fun(compressedImageData: love.CompressedImageData, settings?: table):love.Texture
+---@overload fun(fileData: love.FileData, settings: table):love.Texture
+---@overload fun(imageData: love.ImageData, settings: table):love.Texture
+---@overload fun(compressedImageData: love.CompressedImageData, settings: table):love.Texture
 ---@param filename string # The filepath to the image file.
----@param settings? {dpiscale: number, linear: boolean, mipmaps: boolean} # A table containing the following fields:
+---@param settings {dpiscale: number, linear: boolean, mipmaps: boolean} # A table containing the following fields:
 ---@return love.Texture image # A new Texture object which can be drawn on screen.
 function love.graphics.newImage(filename, settings) end
 
@@ -816,7 +817,7 @@ function love.graphics.newImageFont(filename, glyphs) end
 ---@overload fun(vertexformat: table, vertices: table, mode?: love.MeshDrawMode, usage?: love.BufferDataUsage):love.Mesh
 ---@overload fun(vertexformat: table, vertexcount: number, mode?: love.MeshDrawMode, usage?: love.BufferDataUsage):love.Mesh
 ---@overload fun(vertexcount: number, texture?: love.Texture, mode?: love.MeshDrawMode):love.Mesh
----@param vertices {["1"]: number, ["2"]: number, ["3"]: number, ["4"]: number, ["5"]: number, ["6"]: number, ["7"]: number, ["8"]: number} # The table filled with vertex information tables for each vertex as follows:
+---@param vertices {1: number, 2: number, 3: number, 4: number, 5: number, 6: number, 7: number, 8: number}[] # The table filled with vertex information tables for each vertex as follows:
 ---@param mode? love.MeshDrawMode # How the vertices are used when drawing. The default mode 'fan' is sufficient for simple convex polygons.
 ---@param usage? love.BufferDataUsage # The expected usage of the Mesh. The specified usage mode affects the Mesh's memory usage and performance.
 ---@return love.Mesh mesh # The new mesh.
@@ -860,9 +861,9 @@ function love.graphics.newQuad(x, y, width, height, sw, sh) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.newShader)
 ---
----@overload fun(pixelcode: string, vertexcode: string, defines: table):love.Shader
+---@overload fun(pixelcode: string, vertexcode: string, defines?: table):love.Shader
 ---@param code string # The pixel shader or vertex shader code, or a filename pointing to a file with the code.
----@param defines table # 
+---@param defines? table<string, string> # 
 ---@return love.Shader shader # A Shader object for use in drawing operations.
 function love.graphics.newShader(code, defines) end
 
@@ -878,19 +879,6 @@ function love.graphics.newShader(code, defines) end
 ---@param maxsprites? number # The maximum number of sprites that the SpriteBatch can contain at any given time. Since version 11.0, additional sprites added past this number will automatically grow the spritebatch.
 ---@return love.SpriteBatch spriteBatch # The new SpriteBatch.
 function love.graphics.newSpriteBatch(image, maxsprites) end
-
----
----Creates a new drawable Text object.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.newText)
----
----@deprecated renamed to love.graphics.newTextBatch
----@overload fun(font: love.Font, coloredtext: table):love.TextBatch
----@param font love.Font # The font to use for the text.
----@param textstring? string # The initial string of text that the new Text object will contain. May be nil.
----@return love.TextBatch text # The new drawable Text object.
-function love.graphics.newText(font, textstring) end
 
 ---
 ---Creates a new drawable Text object.
@@ -926,7 +914,7 @@ function love.graphics.newTexture(width, height, settings) end
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.newVideo)
 ---
 ---@overload fun(videostream: love.VideoStream):love.Video
----@overload fun(filename: string, settings?: table):love.Video
+---@overload fun(filename: string, settings: table):love.Video
 ---@overload fun(filename: string, loadaudio?: boolean):love.Video
 ---@overload fun(videostream: love.VideoStream, loadaudio?: boolean):love.Video
 ---@param filename string # The file path to the Ogg Theora video file.
@@ -1089,19 +1077,35 @@ function love.graphics.push() end
 ---
 ---
 ---
+---[Open in Browser](https://love2d.org/wiki/love.graphics.readbackBuffer)
+---
+---@param buffer love.GraphicsBuffer # 
+---@param offset? number # 
+---@param size? number # 
+---@param dest? love.ByteData # 
+---@param destoffset? love.ByteData # 
+---@return love.ByteData byteData # 
+function love.graphics.readbackBuffer(buffer, offset, size, dest, destoffset) end
+
+---
+---Generates or updates ImageData from the contents of the given Texture.
+---
+---Unlike love.graphics.readbackTextureAsync, this will not finish and return until the GPU completes its own asynchronous work which may take a frame's worth of time or more.
+---
+---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics.readbackTexture)
 ---
----@param texture love.Texture # 
----@param slice? number # 
----@param mipmap? number # 
----@param x? number # 
----@param y? number # 
----@param w? number # 
----@param h? number # 
----@param dest? love.ImageData # 
----@param destx? number # 
----@param desty? number # 
----@return love.ImageData imagedata # 
+---@param texture love.Texture # The Texture to capture.
+---@param slice? number # The cubemap face index, array index, or depth layer for cubemap, array, or volume type Textures, respectively. This argument is ignored for regular 2D textures.
+---@param mipmap? number # The mipmap index to use, for Textures with mipmaps.
+---@param x? number # The x-axis of the top-left corner (in pixels) of the area within the Texture to capture.
+---@param y? number # The y-axis of the top-left corner (in pixels) of the area within the Texture to capture.
+---@param w? number # The width in pixels of the area within the Texture to capture.
+---@param h? number # The height in pixels of the area within the Texture to capture.
+---@param dest? love.ImageData # Optional existing destination ImageData that will be used instead of creating a new ImageData object.
+---@param destx? number # The x-axis of the top-left corner (in pixels) of the area within the destination ImageData to use.
+---@param desty? number # The y-axis of the top-left corner (in pixels) of the area within the destination ImageData to use.
+---@return love.ImageData imagedata # The new ImageData made from the Texture's contents.
 function love.graphics.readbackTexture(texture, slice, mipmap, x, y, w, h, dest, destx, desty) end
 
 ---
@@ -1359,21 +1363,6 @@ function love.graphics.setLineWidth(width) end
 function love.graphics.setMeshCullMode(mode) end
 
 ---
----Creates and sets a new Font.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.setNewFont)
----
----@deprecated
----@overload fun(filename: string, size?: number):love.Font
----@overload fun(file: love.File, size?: number):love.Font
----@overload fun(data: love.Data, size?: number):love.Font
----@overload fun(rasterizer: love.Rasterizer):love.Font
----@param size? number # The size of the font.
----@return love.Font font # The new font.
-function love.graphics.setNewFont(size) end
-
----
 ---Sets the point size.
 ---
 ---
@@ -1451,20 +1440,6 @@ function love.graphics.setStencilMode(mode, value) end
 function love.graphics.setStencilState(action, comparemode, value, readmask, writemask) end
 
 ---
----Configures or disables stencil testing.
----
----When stencil testing is enabled, the geometry of everything that is drawn afterward will be clipped / stencilled out based on a comparison between the arguments of this function and the stencil value of each pixel that the geometry touches. The stencil values of pixels are affected via love.graphics.stencil.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.setStencilTest)
----
----@deprecated replaced by love.graphics.setStencilMode or love.graphics.setStencilState
----@overload fun()
----@param comparemode love.CompareMode # The type of comparison to make for each pixel.
----@param comparevalue number # The value to use when comparing with the stencil value of each pixel. Must be between 0 and 255.
-function love.graphics.setStencilTest(comparemode, comparevalue) end
-
----
 ---Sets whether wireframe lines will be used when drawing.
 ---
 ---
@@ -1482,23 +1457,6 @@ function love.graphics.setWireframe(enable) end
 ---@param kx number # The shear factor on the x-axis.
 ---@param ky number # The shear factor on the y-axis.
 function love.graphics.shear(kx, ky) end
-
----
----Draws geometry as a stencil.
----
----The geometry drawn by the supplied function sets invisible stencil values of pixels, instead of setting pixel colors. The stencil buffer (which contains those stencil values) can act like a mask / stencil - love.graphics.setStencilTest can be used afterward to determine how further rendering is affected by the stencil values in each pixel.
----
----Stencil values are integers within the range of 255.
----
----
----[Open in Browser](https://love2d.org/wiki/love.graphics.stencil)
----
----@deprecated replaced by love.graphics.setStencilMode or love.graphics.setStencilState
----@param stencilfunction function # Function which draws geometry. The stencil values of pixels, rather than the color of each pixel, will be affected by the geometry.
----@param action? love.StencilAction # How to modify any stencil values of pixels that are touched by what's drawn in the stencil function.
----@param value? number # The new stencil value to use for pixels if the 'replace' stencil action is used. Has no effect with other stencil actions. Must be between 0 and 255.
----@param keepvalues? boolean # True to preserve old stencil values of pixels, false to re-set every pixel's stencil value to 0 before executing the stencil function. love.graphics.clear will also re-set all stencil values.
-function love.graphics.stencil(stencilfunction, action, value, keepvalues) end
 
 ---
 ---Converts the given 2D position from global coordinates into screen-space.
@@ -1677,7 +1635,7 @@ function Font:getWidth(text) end
 ---@param text string # The text that will be wrapped.
 ---@param wraplimit number # The maximum width in pixels of each line that ''text'' is allowed before wrapping.
 ---@return number width # The maximum width of the wrapped text.
----@return table wrappedtext # A sequence containing each line of text that was wrapped.
+---@return string[] wrappedtext # A sequence containing each line of text that was wrapped.
 function Font:getWrap(text, wraplimit) end
 
 ---
@@ -1799,6 +1757,19 @@ function GraphicsBuffer:getSize() end
 ---
 ---
 ---
+---[Open in Browser](https://love2d.org/wiki/GraphicsBuffer:setArrayData)
+---
+---@overload fun(self: love.GraphicsBuffer, data: love.Data, sourceindex?: number, destindex?: number, count?: number)
+---@param data table # 
+---@param sourceindex? number # 
+---@param destindex? number # 
+---@param count? number # 
+function GraphicsBuffer:setArrayData(data, sourceindex, destindex, count) end
+
+---
+---
+---
+---
 ---[Open in Browser](https://love2d.org/wiki/love.graphics)
 ---
 ---@class love.GraphicsReadback: love.Object
@@ -1887,6 +1858,18 @@ function Mesh:attachAttribute(name, mesh) end
 function Mesh:detachAttribute(name) end
 
 ---
+---Immediately sends all modified vertex data in the Mesh to the graphics card.
+---
+---Normally it isn't necessary to call this method as love.graphics.draw(mesh, ...) will do it automatically if needed, but explicitly using **Mesh:flush** gives more control over when the work happens.
+---
+---If this method is used, it generally shouldn't be called more than once (at most) between love.graphics.draw(mesh, ...) calls.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Mesh:flush)
+---
+function Mesh:flush() end
+
+---
 ---Gets the mode used when drawing the Mesh.
 ---
 ---
@@ -1967,7 +1950,7 @@ function Mesh:getVertexFormat() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Mesh:getVertexMap)
 ---
----@return table map # A table containing the list of vertex indices used when drawing.
+---@return number[] map # A table containing the list of vertex indices used when drawing.
 function Mesh:getVertexMap() end
 
 ---
@@ -2257,7 +2240,7 @@ function ParticleSystem:getPosition() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/ParticleSystem:getQuads)
 ---
----@return table quads # A table containing the Quads used.
+---@return love.Quad[] quads # A table containing the Quads used.
 function ParticleSystem:getQuads() end
 
 ---
@@ -2439,20 +2422,13 @@ function ParticleSystem:setBufferSize(size) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/ParticleSystem:setColors)
 ---
----@overload fun(self: love.ParticleSystem, rgba1: table, rgba2: table, rgba8: table)
+---@overload fun(self: love.ParticleSystem, rgba1: table, ...)
 ---@param r1 number # First color, red component (0-1).
 ---@param g1 number # First color, green component (0-1).
 ---@param b1 number # First color, blue component (0-1).
 ---@param a1? number # First color, alpha component (0-1).
----@param r2? number # Second color, red component (0-1).
----@param g2? number # Second color, green component (0-1).
----@param b2? number # Second color, blue component (0-1).
----@param a2? number # Second color, alpha component (0-1).
----@param r8? number # Eighth color, red component (0-1).
----@param g8? number # Eighth color, green component (0-1).
----@param b8? number # Eighth color, blue component (0-1).
----@param a8? number # Eighth color, alpha component (0-1).
-function ParticleSystem:setColors(r1, g1, b1, a1, r2, g2, b2, a2, r8, g8, b8, a8) end
+---@vararg number # Additional colors.
+function ParticleSystem:setColors(r1, g1, b1, a1, ...) end
 
 ---
 ---Sets the direction the particles will be emitted in.
@@ -2567,8 +2543,8 @@ function ParticleSystem:setPosition(x, y) end
 ---
 ---@overload fun(self: love.ParticleSystem, quads: table)
 ---@param quad1 love.Quad # The first Quad to use.
----@param quad2 love.Quad # The second Quad to use.
-function ParticleSystem:setQuads(quad1, quad2) end
+---@vararg love.Quad # Additional Quads to use.
+function ParticleSystem:setQuads(quad1, ...) end
 
 ---
 ---Set the radial acceleration (away from the emitter).
@@ -2771,6 +2747,17 @@ local Shader = {}
 function Shader:getDebugName() end
 
 ---
+---
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Shader:getLocalThreadgroupSize)
+---
+---@return number x # 
+---@return number y # 
+---@return number z # 
+function Shader:getLocalThreadgroupSize() end
+
+---
 ---Returns any warning and error messages from compiling the shader code. This can be used for debugging your shaders if there's anything the graphics hardware doesn't like.
 ---
 ---
@@ -2847,8 +2834,8 @@ function Shader:send(name, number, ...) end
 ---[Open in Browser](https://love2d.org/wiki/Shader:sendColor)
 ---
 ---@param name string # The name of the color extern variable to send to in the shader.
----@param color table # A table with red, green, blue, and optional alpha color components in the range of 1 to send to the extern as a vector.
----@vararg table # Additional colors to send in case the extern is an array. All colors need to be of the same size (e.g. only vec3's).
+---@param color number[] # A table with red, green, blue, and optional alpha color components in the range of 1 to send to the extern as a vector.
+---@vararg number[] # Additional colors to send in case the extern is an array. All colors need to be of the same size (e.g. only vec3's).
 function Shader:sendColor(name, color, ...) end
 
 ---
@@ -3007,7 +2994,6 @@ function SpriteBatch:set(spriteindex, x, y, r, sx, sy, ox, oy, kx, ky) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/SpriteBatch:setColor)
 ---
----@overload fun(self: love.SpriteBatch)
 ---@param r number # The amount of red.
 ---@param g number # The amount of green.
 ---@param b number # The amount of blue.
@@ -3409,18 +3395,18 @@ function Texture:getWrap() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Texture:getViewFormats)
 ---
----@return table viewFormats # 
+---@return love.PixelFormat[] viewFormats # 
 ---@return love.WrapMode vert # Vertical wrapping mode of the texture.
 ---@return love.WrapMode depth # Wrapping mode for the z-axis of a Volume texture.
 function Texture:getViewFormats() end
 
 ---
----
+---Gets whether the Texture has been created with canvas capabilities via love.graphics.newCanvas or love.graphics.newTexture.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/Texture:isCanvas)
 ---
----@return boolean canvas # 
+---@return boolean canvas # True if the Texture can be rendered to with love.graphics.setCanvas, false otherwise.
 function Texture:isCanvas() end
 
 ---
@@ -3444,12 +3430,14 @@ function Texture:isCompressed() end
 function Texture:isComputeWritable() end
 
 ---
+---Gets whether the Texture was created with the linear (non-gamma corrected) flag set to true.
 ---
+---This method always returns false when gamma-correct rendering is not enabled.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/Texture:isFormatLinear)
 ---
----@return boolean linear # 
+---@return boolean linear # Whether the Texture's internal pixel format is linear (not gamma corrected), when gamma-correct rendering is enabled.
 function Texture:isFormatLinear() end
 
 ---
@@ -3466,26 +3454,15 @@ function Texture:isFormatLinear() end
 function Texture:isReadable() end
 
 ---
----Generates ImageData from the contents of the Canvas.
----
----
----[Open in Browser](https://love2d.org/wiki/Texture:newImageData)
----
----@deprecated replaced by love.graphics.readbackTexture
----@overload fun(self: love.Texture, slice: number, mipmap?: number, x: number, y: number, width: number, height: number):love.ImageData
----@return love.ImageData data # The new ImageData made from the Canvas' contents.
-function Texture:newImageData() end
-
----
----Render to the Canvas using a function.
+---Render to the Texture using a function.
 ---
 ---This is a shortcut to love.graphics.setCanvas:
 ---
----canvas:renderTo( func )
+---texture:renderTo( func )
 ---
 ---is the same as
 ---
----love.graphics.setCanvas( canvas )
+---love.graphics.setCanvas( texture )
 ---
 ---func()
 ---
@@ -3495,7 +3472,8 @@ function Texture:newImageData() end
 ---[Open in Browser](https://love2d.org/wiki/Texture:renderTo)
 ---
 ---@param func function # A function performing drawing operations.
-function Texture:renderTo(func) end
+---@vararg any # Additional arguments to call the function with.
+function Texture:renderTo(func, ...) end
 
 ---
 ---Replace the contents of an Image.

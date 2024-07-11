@@ -36,7 +36,7 @@ function love.joystick.getJoystickCount() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.joystick.getJoysticks)
 ---
----@return table joysticks # The list of currently connected Joysticks.
+---@return love.Joystick[] joysticks # The list of currently connected Joysticks.
 function love.joystick.getJoysticks() end
 
 ---
@@ -245,15 +245,29 @@ function Joystick:getJoystickType() end
 function Joystick:getName() end
 
 ---
+---Gets the player index of this Joystick. This corresponds to an indicator light on many common gamepads.
 ---
+---Note that this is independent from the array index of this Joystick in the table returned by love.joystick.getJoysticks.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:getPlayerIndex)
+---
+---@return number index # The 1-based player index being used for this Joystick, or -1 if the player index has not been set or cannot be determined.
+function Joystick:getPlayerIndex() end
+
+---
+---Gets the latest data for the given sensor type for this Joystick.
+---The returned values have meaning based on the sensor type, for example an accelerometer will return acceleration values along each axis.
+---
+---If the sensor was not enabled via Joystick:setSensorEnabled, this function may cause an error.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/Joystick:getSensorData)
 ---
----@param sensorType love.SensorType # 
----@return number x # 
----@return number y # 
----@return number z # 
+---@param sensorType love.SensorType # The type of sensor.
+---@return number x # The sensor's current 1st value.
+---@return number y # The sensor's current 2nd value.
+---@return number z # The sensor's current 3rd value.
 function Joystick:getSensorData(sensorType) end
 
 ---
@@ -319,13 +333,13 @@ function Joystick:isGamepad() end
 function Joystick:isGamepadDown(buttonN) end
 
 ---
----
+---Gets whether the specified sensor is currently enabled on this Joystick.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/Joystick:isSensorEnabled)
 ---
----@param sensorType love.SensorType # 
----@return boolean enabled # 
+---@param sensorType love.SensorType # Type of sensor to check.
+---@return boolean enabled # Whether the sensor is currently enabled.
 function Joystick:isSensorEnabled(sensorType) end
 
 ---
@@ -338,13 +352,27 @@ function Joystick:isSensorEnabled(sensorType) end
 function Joystick:isVibrationSupported() end
 
 ---
+---Sets the player index of this Joystick. This corresponds to an indicator light on many common gamepads.
 ---
+---Note that this is independent from the array index of this Joystick in the table returned by love.joystick.getJoysticks.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/Joystick:setPlayerIndex)
+---
+---@param index number # The 1-based player index to use for this Joystick.
+function Joystick:setPlayerIndex(index) end
+
+---
+---Enables or disables the specified sensor on this Joystick.
+---
+---The given sensor type must exist on this Joystick, otherwise this function may cause an error.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/Joystick:setSensorEnabled)
 ---
----@param sensorType love.SensorType # 
-function Joystick:setSensorEnabled(sensorType) end
+---@param sensorType love.SensorType # Type of sensor to enable or disable.
+---@param enable boolean # True to enable the given sensor, false to disable it.
+function Joystick:setSensorEnabled(sensorType, enable) end
 
 ---
 ---Sets the vibration motor speeds on a Joystick with rumble support. Most common gamepads have this functionality, although not all drivers give proper support. Use Joystick:isVibrationSupported to check.

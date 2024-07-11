@@ -10,12 +10,14 @@
 love.window = {}
 
 ---
----Closes the window. It can be reopened with love.window.setMode.
+---Brings the window into the foreground above other windows and sets input focus.
+---
+---This may not be functional on all platforms.
 ---
 ---
----[Open in Browser](https://love2d.org/wiki/love.window.close)
+---[Open in Browser](https://love2d.org/wiki/love.window.focus)
 ---
-function love.window.close() end
+function love.window.focus() end
 
 ---
 ---Converts a number from pixels to density-independent units.
@@ -106,7 +108,7 @@ function love.window.getFullscreen() end
 ---[Open in Browser](https://love2d.org/wiki/love.window.getFullscreenModes)
 ---
 ---@param displayindex? number # The index of the display, if multiple monitors are available.
----@return table modes # A table of width/height pairs. (Note that this may not be in order.)
+---@return {width: number, height: number} modes # A table of width/height pairs. (Note that this may not be in order.)
 function love.window.getFullscreenModes(displayindex) end
 
 ---
@@ -128,6 +130,15 @@ function love.window.getIcon() end
 ---@return number height # Window height.
 ---@return {fullscreen: boolean, fullscreentype: love.FullscreenType, vsync: boolean, msaa: number, resizable: boolean, borderless: boolean, centered: boolean, display: number, minwidth: number, minheight: number, highdpi: boolean, refreshrate: number, x: number, y: number, srgb: boolean} flags # Table with the window properties:
 function love.window.getMode() end
+
+---
+---Gets a pointer to the window's low level internal object. Currently this is a SDL_Window pointer.
+---
+---
+---[Open in Browser](https://love2d.org/wiki/love.window.getPointer)
+---
+---@return lightuserdata pointer # A pointer to the window's SDL_Window object.
+function love.window.getPointer() end
 
 ---
 ---Gets the position of the window on the screen.
@@ -322,7 +333,7 @@ function love.window.setIcon(imagedata) end
 ---
 ---@param width number # Display width.
 ---@param height number # Display height.
----@param flags? {fullscreen: boolean, fullscreentype: love.FullscreenType, vsync: boolean, msaa: number, stencil: boolean, depth: number, resizable: boolean, borderless: boolean, centered: boolean, display: number, minwidth: number, minheight: number, highdpi: boolean, x: number, y: number, usedpiscale: boolean, srgb: boolean} # The flags table with the options:
+---@param flags {fullscreen: boolean, fullscreentype: love.FullscreenType, vsync: boolean, msaa: number, stencil: boolean, depth: number, resizable: boolean, borderless: boolean, centered: boolean, display: number, minwidth: number, minheight: number, highdpi: boolean, x: number, y: number, usedpiscale: boolean, srgb: boolean} # The flags table with the options:
 ---@return boolean success # True if successful, false otherwise.
 function love.window.setMode(width, height, flags) end
 

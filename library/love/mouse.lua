@@ -19,13 +19,16 @@ love.mouse = {}
 function love.mouse.getCursor() end
 
 ---
+---Gets the global position of the mouse on the screen. This can be used when implementing custom drag areas in the window.
 ---
+---The global mouse position is in the same coordinate space as love.window.getPosition and love.window.setPosition.
 ---
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.mouse.getGlobalPosition)
 ---
----@return number x # 
----@return number y # 
+---@return number x # The x-coordinate of the mouse's global position, within its current display.
+---@return number y # The y-coordinate of the mouse's global position, within its current display.
+---@return number displayindex # The index of the display that the mouse is in.
 function love.mouse.getGlobalPosition() end
 
 ---

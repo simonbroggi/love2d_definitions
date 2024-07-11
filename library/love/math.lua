@@ -92,8 +92,8 @@ function love.math.getRandomState() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.math.isConvex)
 ---
----@overload fun(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number):boolean
----@param vertices table # The vertices of the polygon as a table in the form of {x1, y1, x2, y2, x3, y3, ...}.
+---@overload fun(x1: number, y1: number, x2: number, y2: number, ...):boolean
+---@param vertices number[] # The vertices of the polygon as a table in the form of {x1, y1, x2, y2, x3, y3, ...}.
 ---@return boolean convex # Whether the given polygon is convex.
 function love.math.isConvex(vertices) end
 
@@ -127,8 +127,8 @@ function love.math.linearToGamma(lr, lg, lb) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.math.newBezierCurve)
 ---
----@overload fun(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number):love.BezierCurve
----@param vertices table # The vertices of the control polygon as a table in the form of {x1, y1, x2, y2, x3, y3, ...}.
+---@overload fun(x1: number, y1: number, x2: number, y2: number, ...):love.BezierCurve
+---@param vertices number[] # The vertices of the control polygon as a table in the form of {x1, y1, x2, y2, x3, y3, ...}.
 ---@return love.BezierCurve curve # A Bézier curve object.
 function love.math.newBezierCurve(vertices) end
 
@@ -152,24 +152,6 @@ function love.math.newRandomGenerator() end
 ---@overload fun(x: number, y: number, angle?: number, sx?: number, sy?: number, ox?: number, oy?: number, kx?: number, ky?: number):love.Transform
 ---@return love.Transform transform # The new Transform object.
 function love.math.newTransform() end
-
----
----Generates a Simplex or Perlin noise value in 1-4 dimensions. The return value will always be the same, given the same arguments.
----
----Simplex noise is closely related to Perlin noise. It is widely used for procedural content generation.
----
----There are many webpages which discuss Perlin and Simplex noise in detail.
----
----
----[Open in Browser](https://love2d.org/wiki/love.math.noise)
----
----@deprecated replaced by love.math.perlinNoise and love.math.simplexNoise
----@overload fun(x: number, y: number):number
----@overload fun(x: number, y: number, z: number):number
----@overload fun(x: number, y: number, z: number, w: number):number
----@param x number # The number used to generate the noise value.
----@return number value # The noise value in the range of 1.
-function love.math.noise(x) end
 
 ---
 ---Generates a Perlin noise value in 1-4 dimensions. The return value will always be the same, given the same arguments.
@@ -365,7 +347,7 @@ function BezierCurve:removeControlPoint(index) end
 ---[Open in Browser](https://love2d.org/wiki/BezierCurve:render)
 ---
 ---@param depth? number # Number of recursive subdivision steps.
----@return table coordinates # List of x,y-coordinate pairs of points on the curve.
+---@return number[] coordinates # List of x,y-coordinate pairs of points on the curve.
 function BezierCurve:render(depth) end
 
 ---
@@ -381,7 +363,7 @@ function BezierCurve:render(depth) end
 ---@param startpoint number # The starting point along the curve. Must be between 0 and 1.
 ---@param endpoint number # The end of the segment to render. Must be between 0 and 1.
 ---@param depth? number # Number of recursive subdivision steps.
----@return table coordinates # List of x,y-coordinate pairs of points on the specified part of the curve.
+---@return number[] coordinates # List of x,y-coordinate pairs of points on the specified part of the curve.
 function BezierCurve:renderSegment(startpoint, endpoint, depth) end
 
 ---

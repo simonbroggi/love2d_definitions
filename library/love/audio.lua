@@ -15,7 +15,7 @@ love.audio = {}
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.audio.getActiveEffects)
 ---
----@return table effects # The list of the names of the currently enabled effects.
+---@return string[] effects # The list of the names of the currently enabled effects.
 function love.audio.getActiveEffects() end
 
 ---
@@ -103,7 +103,7 @@ function love.audio.getPlaybackDevice() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.audio.getPlaybackDevices)
 ---
----@return table devices # The list of connected playback device names as strings.
+---@return string[] devices # The list of connected playback device names as strings.
 function love.audio.getPlaybackDevices() end
 
 ---
@@ -127,17 +127,8 @@ function love.audio.getPosition() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.audio.getRecordingDevices)
 ---
----@return table devices # The list of connected recording devices.
+---@return love.RecordingDevice[] devices # The list of connected recording devices.
 function love.audio.getRecordingDevices() end
-
----
----Gets the current number of simultaneously playing sources.
----
----
----[Open in Browser](https://love2d.org/wiki/love.audio.getSourceCount)
----
----@return number numSources # The current number of simultaneously playing sources.
-function love.audio.getSourceCount() end
 
 ---
 ---Returns the velocity of the listener.
@@ -207,7 +198,7 @@ function love.audio.newSource(filename, type, mode) end
 ---
 ---@overload fun(source: love.Source, ...)
 ---@overload fun(sources: table)
----@return table Sources # A table containing a list of Sources that were paused by this call.
+---@return love.Source[] Sources # A table containing a list of Sources that were paused by this call.
 function love.audio.pause() end
 
 ---
@@ -456,7 +447,7 @@ function Source:clone() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Source:getActiveEffects)
 ---
----@return table effects # A list of the source's active effect names.
+---@return string[] effects # A list of the source's active effect names.
 function Source:getActiveEffects() end
 
 ---
@@ -530,7 +521,7 @@ function Source:getDuration(unit) end
 ---[Open in Browser](https://love2d.org/wiki/Source:getEffect)
 ---
 ---@param name string # The name of the effect.
----@param filtersettings table # An optional empty table that will be filled with the filter settings.
+---@param filtersettings? table # An optional empty table that will be filled with the filter settings.
 ---@return {volume: number, highgain: number, lowgain: number} filtersettings # The settings for the filter associated to this effect, or nil if the effect is not present in this Source or has no filter associated. The table has the following fields:
 function Source:getEffect(name, filtersettings) end
 

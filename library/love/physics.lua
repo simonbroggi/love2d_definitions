@@ -268,11 +268,10 @@ function love.physics.newPulleyJoint(body1, body2, gx1, gy1, gx2, gy2, x1, y1, x
 ---[Open in Browser](https://love2d.org/wiki/love.physics.newRectangleShape)
 ---
 ---@overload fun(x: number, y: number, width: number, height: number, angle?: number):love.PolygonShape
----@param body love.Body # The body this shape is attached to.
 ---@param width number # The width of the rectangle.
 ---@param height number # The height of the rectangle.
 ---@return love.PolygonShape shape # A new PolygonShape.
-function love.physics.newRectangleShape(body, width, height) end
+function love.physics.newRectangleShape(width, height) end
 
 ---
 ---Creates a pivot joint between two bodies.
@@ -492,7 +491,7 @@ function Body:getAngularVelocity() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Body:getContacts)
 ---
----@return table contacts # A list with all contacts associated with the Body.
+---@return love.Contact[] contacts # A list with all contacts associated with the Body.
 function Body:getContacts() end
 
 ---
@@ -501,7 +500,7 @@ function Body:getContacts() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Body:getFixtures)
 ---
----@return table fixtures # A sequence with all fixtures.
+---@return love.Fixture[] fixtures # A sequence with all fixtures.
 function Body:getFixtures() end
 
 ---
@@ -530,7 +529,7 @@ function Body:getInertia() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Body:getJoints)
 ---
----@return table joints # A sequence with the Joints attached to the Body.
+---@return love.Joint[] joints # A sequence with the Joints attached to the Body.
 function Body:getJoints() end
 
 ---
@@ -1623,8 +1622,6 @@ function Fixture:getGroupIndex() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Fixture:getMask)
 ---
----@return number mask1 # The first category selected by the mask.
----@return number mask2 # The second category selected by the mask.
 function Fixture:getMask() end
 
 ---
@@ -1780,9 +1777,8 @@ function Fixture:setGroupIndex(group) end
 ---
 ---[Open in Browser](https://love2d.org/wiki/Fixture:setMask)
 ---
----@param mask1 number # The first category.
----@param mask2 number # The second category.
-function Fixture:setMask(mask1, mask2) end
+---@vararg number # The masks.
+function Fixture:setMask(...) end
 
 ---
 ---Sets the restitution of the fixture.
@@ -2993,7 +2989,7 @@ function World:destroy() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/World:getBodies)
 ---
----@return table bodies # A sequence with all bodies.
+---@return love.Body[] bodies # A sequence with all bodies.
 function World:getBodies() end
 
 ---
@@ -3041,7 +3037,7 @@ function World:getContactFilter() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/World:getContacts)
 ---
----@return table contacts # A sequence with all Contacts.
+---@return love.Contact[] contacts # A sequence with all Contacts.
 function World:getContacts() end
 
 ---
@@ -3069,7 +3065,7 @@ function World:getJointCount() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/World:getJoints)
 ---
----@return table joints # A sequence with all joints.
+---@return love.Joint[] joints # A sequence with all joints.
 function World:getJoints() end
 
 ---

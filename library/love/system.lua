@@ -44,7 +44,7 @@ function love.system.getPowerInfo() end
 ---
 ---[Open in Browser](https://love2d.org/wiki/love.system.getPreferredLocales)
 ---
----@return table locales # A sequence of strings in order of user's preference. Locales are in form xx_YY (or just xx when country is not available) where xx is an ISO-639 language specifier and YY (if available) is an ISO-3166 country code
+---@return string[] locales # A sequence of strings in order of user's preference. Locales are in form xx_YY (or just xx when country is not available) where xx is an ISO-639 language specifier and YY (if available) is an ISO-3166 country code
 function love.system.getPreferredLocales() end
 
 ---
